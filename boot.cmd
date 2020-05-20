@@ -1,3 +1,3 @@
-loady ${loadaddr}
+run loadimage;
 run mmcargs;
 run mmcboot;
