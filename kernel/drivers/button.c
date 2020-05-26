@@ -36,12 +36,12 @@ typedef struct button_info button_info;
 
 button_info buttons[] =
 {
-  { GPIO_PIN(6,  6) },
-  { GPIO_PIN(7, 12) },
-  { GPIO_PIN(7, 15) },
-  { GPIO_PIN(7, 14) },
-  { GPIO_PIN(1, 13) },
-  { GPIO_PIN(6, 10) }
+  { GPIO_PIN(6,  6) }, // Left
+  { GPIO_PIN(7, 12) }, // Right
+  { GPIO_PIN(7, 15) }, // Top
+  { GPIO_PIN(7, 14) }, // Bottom
+  { GPIO_PIN(1, 13) }, // Center
+  { GPIO_PIN(6, 10) }  // Back
 };
 
 button_state

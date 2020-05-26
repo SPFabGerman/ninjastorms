@@ -20,8 +20,9 @@
 
 #include "main.h"
 
-#include "kernel/drivers/button.h"
 #include "kernel/scheduler.h"
+
+#include "kernel/demo/demo_button.c"
 
 #include <stdio.h>
 
@@ -96,6 +97,8 @@ kernel_main (void)
   add_task(&task_b);
   add_task(&task_c);
   add_task(&task_d);
+
+  add_task(&button_test);
 
   start_scheduler();
 
