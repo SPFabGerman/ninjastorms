@@ -21,6 +21,7 @@
 #include "main.h"
 
 #include "kernel/scheduler.h"
+#include "kernel/drivers/led.h"
 
 #include "kernel/demo/demo_button.c"
 
@@ -78,6 +79,67 @@ task_d (void)
     }
 }
 
+static void
+task_button_leds (void)
+{
+  printf("Start the LED Task.\n");
+  printf("Press and hold the Left/Right Button to specify which LED you want to change.\n");
+  printf("You can select the color with the top, center and bottom Button.\n");
+  
+  while (1)
+  {
+    button_state newState;
+
+    if ((newState = button_get_state(BUTTON_TOP)))
+    {
+      if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
+      {
+        led_set(LED_LEFT, LED_GREEN);
+      }
+      if (button_get_state(BUTTON_RIGHT) == BUTTON_DOWN)
+      {
+        led_set(LED_RIGHT, LED_GREEN);
+      }
+    }
+
+    if ((newState = button_get_state(BUTTON_BOTTOM)))
+    {
+      if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
+      {
+        led_set(LED_LEFT, LED_RED);
+      }
+      if (button_get_state(BUTTON_RIGHT) == BUTTON_DOWN)
+      {
+        led_set(LED_RIGHT, LED_RED);
+      }
+    }
+
+    if ((newState = button_get_state(BUTTON_CENTER)))
+    {
+      if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
+      {
+        led_set(LED_LEFT, LED_ORANGE);
+      }
+      if (button_get_state(BUTTON_RIGHT) == BUTTON_DOWN)
+      {
+        led_set(LED_RIGHT, LED_ORANGE);
+      }
+    }
+
+    if ((newState = button_get_state(BUTTON_BACK)))
+    {
+      if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
+      {
+        led_set(LED_LEFT, LED_BLACK);
+      }
+      if (button_get_state(BUTTON_RIGHT) == BUTTON_DOWN)
+      {
+        led_set(LED_RIGHT, LED_BLACK);
+      }
+    }
+  }
+}
+
 char shuriken[] =
 "                 /\\\n"
 "                /  \\\n"
@@ -98,6 +160,8 @@ kernel_main (void)
   add_task(&task_c);
   add_task(&task_d);
 
+  add_task(&task_button_leds);
+  
   add_task(&button_test);
 
   start_scheduler();
