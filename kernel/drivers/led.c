@@ -37,8 +37,8 @@ typedef struct led_info led_info;
 
 led_info leds[] =
 {
-  { GPIO_PIN(6, 13), GPIO_PIN(6,  7) }, // LED_LEFT
-  { GPIO_PIN(6, 12), GPIO_PIN(6, 14) }  // LED_RIGHT
+  [LED_LEFT]  = { GPIO_PIN(6, 13), GPIO_PIN(6,  7) },
+  [LED_RIGHT] = { GPIO_PIN(6, 12), GPIO_PIN(6, 14) }
 };
 
 void
@@ -46,13 +46,13 @@ led_set (led_id led, led_color color)
 {
   if (led & LED_LEFT)
     {
-      gpio_set(leds[0].pin1, color & 1);
-      gpio_set(leds[0].pin2, (color & 2) >> 1);
+      gpio_set(leds[LED_LEFT].pin1, color & 0x01); // Set Pin 1 to the first bit
+      gpio_set(leds[LED_LEFT].pin2, (color & 0x02) >> 1); // Set Pin 2 to the second bit
     }
   if (led & LED_RIGHT)
     {
-      gpio_set(leds[1].pin1, color & 1);
-      gpio_set(leds[1].pin2, (color & 2) >> 1);
+      gpio_set(leds[LED_RIGHT].pin1, color & 0x01);
+      gpio_set(leds[LED_RIGHT].pin2, (color & 0x02) >> 1);
     }
 }
 
@@ -63,8 +63,8 @@ static void
 __attribute((constructor))
 led_init (void)
 {
-  gpio_init_outpin(leds[0].pin1);
-  gpio_init_outpin(leds[0].pin2);
-  gpio_init_outpin(leds[1].pin1);
-  gpio_init_outpin(leds[1].pin2);
+  gpio_init_outpin(leds[LED_LEFT].pin1);
+  gpio_init_outpin(leds[LED_LEFT].pin2);
+  gpio_init_outpin(leds[LED_RIGHT].pin1);
+  gpio_init_outpin(leds[LED_RIGHT].pin2);
 }

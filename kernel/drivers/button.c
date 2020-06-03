@@ -36,12 +36,12 @@ typedef struct button_info button_info;
 
 button_info buttons[] =
 {
-  { GPIO_PIN(6,  6) }, // Left
-  { GPIO_PIN(7, 12) }, // Right
-  { GPIO_PIN(7, 15) }, // Top
-  { GPIO_PIN(7, 14) }, // Bottom
-  { GPIO_PIN(1, 13) }, // Center
-  { GPIO_PIN(6, 10) }  // Back
+  [BUTTON_LEFT]   = { GPIO_PIN(6,  6) },
+  [BUTTON_RIGHT]  = { GPIO_PIN(7, 12) },
+  [BUTTON_TOP]    = { GPIO_PIN(7, 15) },
+  [BUTTON_BOTTOM] = { GPIO_PIN(7, 14) },
+  [BUTTON_CENTER] = { GPIO_PIN(1, 13) },
+  [BUTTON_BACK]   = { GPIO_PIN(6, 10) }
 };
 
 button_state
@@ -57,12 +57,11 @@ static void
 __attribute((constructor))
 button_init (void)
 {
-  gpio_init_inpin(buttons[0].pin);
-  gpio_init_inpin(buttons[1].pin);
-  gpio_init_inpin(buttons[2].pin);
-  gpio_init_inpin(buttons[3].pin);
-  gpio_init_inpin(buttons[4].pin);
-  gpio_init_inpin(buttons[5].pin);
+  int i;
+  for (i = 0; i <= 5; i++) {
+    // Loop over and initialize all 5 Buttons
+    gpio_init_inpin(buttons[i].pin);
+  }
 
   // disable pull-up for pin group 25 - required for left button
   *((volatile unsigned int*)(SYSCFG1_BASE + 0x10)) &= 0xFDFFFFFF;
