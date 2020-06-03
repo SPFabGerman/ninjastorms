@@ -34,6 +34,9 @@ typedef enum led_id led_id;
 
 enum led_color
 {
+  /* Turns the LED off.
+   * Same as LED_OFF.
+   * Kept for backwards compatability. */
   LED_BLACK  = 0x00,
   LED_RED    = 0x01,
   LED_GREEN  = 0x02,
@@ -41,12 +44,16 @@ enum led_color
 };
 typedef enum led_color led_color;
 
+/* Turns the LED off.
+ * Same as LED_BLACK. */
+static const led_color LED_OFF = LED_BLACK;
+
 
 /* set the state of the given LED(s)
  *
  * params:
  *   led - an identifier for the target LEDs, can be LED_LEFT, LED_RIGHT
  *   or LED_BOTH
- *   color - the target color, LED_BLACK, LED_RED, LED_GREEN or LED_ORANGE
+ *   color - the target color, LED_OFF, LED_RED, LED_GREEN or LED_ORANGE
  */
 void led_set (led_id led, led_color color);

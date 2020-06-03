@@ -43,8 +43,10 @@ void gpio_init_outpin (unsigned int pin);
 
 void gpio_init_inpin (unsigned int pin);
 
+/* Set the state of the pin to value. */
 void gpio_set (unsigned int pin, unsigned int value);
 
+/* Get the state of the pin. */
 unsigned int gpio_get (unsigned int pin);
 
 void spi_init_pin (unsigned int pin);

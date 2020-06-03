@@ -26,22 +26,46 @@
 
 enum button_id
 {
-  BUTTON_LEFT     = 0x00,
-  BUTTON_RIGHT    = 0x01,
-  BUTTON_TOP      = 0x02,
-  BUTTON_BOTTOM   = 0x03,
-  BUTTON_CENTER   = 0x04,
-  BUTTON_BACK     = 0x05
+  BUTTON_LEFT = 0x00,
+  BUTTON_RIGHT = 0x01,
+  /* The Button over the Central Button.
+   * Not to be confused with BUTTON_UP. */
+  BUTTON_TOP = 0x02,
+  /* The Button under the Central Button.
+   * Not to be confused with BUTTON_DOWN. */
+  BUTTON_BOTTOM = 0x03,
+  BUTTON_CENTER = 0x04,
+  /* The Button in the top left corner. */
+  BUTTON_BACK = 0x05
 };
 typedef enum button_id button_id;
 
 enum button_state
 {
-  BUTTON_UP       = 0x00,
-  BUTTON_DOWN     = 0x01
+  /* Signals, that the Button is not pressed.
+   * Identical to BUTTON_STATE_UP.
+   * Kept for backwards compatability.
+   * Not to be confused with BUTTON_TOP.
+   */
+  BUTTON_UP = 0x00,
+  /* Signals, that the Button is pressed.
+   * Identical to BUTTON_STATE_DOWN.
+   * Kept for backwards compatability.
+   * Not to be confused with BUTTON_BOTTOM.
+   */
+  BUTTON_DOWN = 0x01
 };
 typedef enum button_state button_state;
+// Define some additional aliases for clarity.
 
+/* Signals, that the Button is not pressed.
+ * Identical to BUTTON_UP.
+ */
+static const button_state BUTTON_STATE_UP = BUTTON_UP;
+/* Signals, that the Button is pressed.
+ * Identical to BUTTON_DOWN.
+ */
+static const button_state BUTTON_STATE_DOWN = BUTTON_DOWN;
 
 /* get the state of a button
  *
@@ -49,6 +73,6 @@ typedef enum button_state button_state;
  *   - button_id: the button to probe, must be in enum button_id
  *
  * returns:
- *   the state of the probed button, either BUTTON_UP or BUTTON_DOWN
+ *   the state of the probed button, either BUTTON_STATE_UP (0) or BUTTON_STATE_DOWN (1)
  */
 button_state button_get_state (button_id button);
