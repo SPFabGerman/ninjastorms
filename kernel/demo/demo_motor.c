@@ -20,14 +20,24 @@
 
 #include "demo_motor.h"
 
-#include "kernel/drivers/sensor.h"
+#include "kernel/drivers/button.h"
 #include "kernel/drivers/motor.h"
 
 void
 demo_motor (void)
 {
-  if (sensor_touch_get_state(SENSOR_PORT_2) == SENSOR_TOUCH_DOWN)
-    motor_set_state(MOTOR_PORT_A, MOTOR_FORWARD);
-  else
-    motor_set_state(MOTOR_PORT_A, MOTOR_OFF);
+  printf("Starting Motor Demo Task for Motor on Port A.\n");
+  while(1) {
+    if(button_get_state(BUTTON_CENTER))
+    {
+      motor_set_state(MOTOR_PORT_A, MOTOR_OFF);
+    }
+    else if (button_get_state(BUTTON_LEFT)) {
+      motor_set_state(MOTOR_PORT_A, MOTOR_FORWARD);
+    }
+    else if (button_get_state(BUTTON_RIGHT))
+    {
+      motor_set_state(MOTOR_PORT_A, MOTOR_BACKWARD);
+    }
+  }
 }
