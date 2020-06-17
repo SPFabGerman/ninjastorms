@@ -41,10 +41,10 @@ enum motor_state
 };
 typedef enum motor_state motor_state;
 
-/* set the state of an attached motor
+/* set the state of an attached motor (NXT or EV3)
  *
  * params:
- *   port - the port to query
+ *   port - the port to query (MOTOR_PORT_A to MOTOR_PORT_D)
  *   state - one of MOTOR_FORWARD, MOTOR_BACKWARD, MOTOR_OFF
  *
  * errors:
