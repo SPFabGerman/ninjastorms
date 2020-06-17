@@ -78,6 +78,6 @@ sensor_init (void)
       gpio_init_pin(ports[i].buffer);
     }
 
-  // disable pull-dpwn
+  // disable pull-down
   *((volatile unsigned int*)(SYSCFG1_BASE + 0x0C)) &= ~0xFFFFFFFF;
 }
