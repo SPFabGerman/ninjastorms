@@ -22,6 +22,7 @@
 
 #include "kernel/scheduler.h"
 #include "kernel/drivers/led.h"
+#include "kernel/drivers/sensor.h"
 
 #include "kernel/demo/demo_button.c"
 
@@ -88,9 +89,7 @@ task_button_leds (void)
   
   while (1)
   {
-    button_state newState;
-
-    if ((newState = button_get_state(BUTTON_TOP)))
+    if (button_get_state(BUTTON_TOP))
     {
       if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
       {
@@ -102,7 +101,7 @@ task_button_leds (void)
       }
     }
 
-    if ((newState = button_get_state(BUTTON_BOTTOM)))
+    if (button_get_state(BUTTON_BOTTOM))
     {
       if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
       {
@@ -114,7 +113,7 @@ task_button_leds (void)
       }
     }
 
-    if ((newState = button_get_state(BUTTON_CENTER)))
+    if (button_get_state(BUTTON_CENTER))
     {
       if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
       {
@@ -126,7 +125,7 @@ task_button_leds (void)
       }
     }
 
-    if ((newState = button_get_state(BUTTON_BACK)))
+    if (button_get_state(BUTTON_BACK))
     {
       if (button_get_state(BUTTON_LEFT) == BUTTON_DOWN)
       {
@@ -136,6 +135,22 @@ task_button_leds (void)
       {
         led_set(LED_RIGHT, LED_BLACK);
       }
+    }
+  }
+}
+
+static void
+sensor_touch_test(void)
+{
+  printf("Start the Touch Sensor test on Port 2.\n");
+  sensor_touch_state last = sensor_touch_get_state(SENSOR_PORT_2);
+  while (1)
+  {
+    sensor_touch_state newState = sensor_touch_get_state(SENSOR_PORT_2);
+    if (newState != last)
+    {
+      last = newState;
+      printf("Touch Sensor, new State: %i\n", newState);
     }
   }
 }
@@ -160,7 +175,7 @@ kernel_main (void)
   add_task(&task_c);
   add_task(&task_d);
 
-  add_task(&task_button_leds);
+  add_task(&sensor_touch_test);
   
   add_task(&button_test);
 
