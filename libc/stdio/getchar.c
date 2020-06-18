@@ -48,64 +48,10 @@ int getchar()
     printf("getchar: Unimplemented!\n");
     return -1;
 #endif
-    
-    // Enable Recieve Interrupt
-    *UART_IER = *UART_IER | 0b01;
 
-    // Loop until we get a Recieve Interrupt
-    while (1) {
+    // Wait until new data can be recieved
+    while ((*UART_LSR & 0b01) == 0);
 
-        int interrupt, has_new_interrupt;
-        // Wait for next interrupt
-        do {
-            // Get State of Interrupt Identification Register
-            interrupt = *UART_IIR;
-            has_new_interrupt = interrupt & 0b0001;
-        } while (has_new_interrupt == 1);
-
-        // Get the type of the new interrupt
-        int interrupt_type = (interrupt >> 1) & (0b111);
-        switch (interrupt_type) {
-            int dummy;
-            int c;
-
-        case 0b000:
-            // Modem Status Change?
-            // Make a dummy read to reset interrupt register.
-            dummy = *UART_MSR;
-            break;
-
-        case 0b011:
-            // Line Status Register has changed.
-            // Again, we don't really care about that
-            // and just use a dummy read to reset interrupt register.
-            dummy = *UART_LSR;
-            break;
-
-        case 0b001:
-            // Transmitter holding register is empty
-            // All Data has been send and new data can be send.
-            // Implementation not needed here.
-            // Will be reset on the next IIR read.
-            break;
-
-        case 0b110:
-            // Character Timeout:
-            // ???
-            // Is also reset by a RBR read.
-        case 0b010:
-            // New Data can be recieved! Yay.
-            // Read RBR to reset interrupt state and return.
-            c = *UART_RBR;
-            return c;
-        
-        default:
-            // Undefined behaviour?
-            return -1;
-        } /* switch (interrupt_type) */
-
-    } /* while (1) */
-
-    // Unreachable
-    return -1;
+    int c = *UART_RBR;
+    return c;
 }

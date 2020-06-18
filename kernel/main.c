@@ -100,13 +100,14 @@ syscall_test(void)
 static void
 getchar_test(void)
 {
+#ifdef BOARD_EV3
   while (1) {
     volatile int i;
-    for (i = 0; i < 1000000; ++i);
-    printf("Please put char: ");
+    printf("Type a character!\n");
     int c = getchar();
-    printf("\nYour character was: %c\n", c);
+    printf("Your character was: %c\n", c);
   }
+#endif
 }
 
 char shuriken[] =
@@ -124,11 +125,14 @@ kernel_main (void)
   puts("  shuriken ready");
   puts(shuriken);
 
-  //add_task(&task_a);
-  //add_task(&task_b);
-  //add_task(&task_c);
+  // add_task(&task_a);
+  // add_task(&task_b);
+  // add_task(&task_c);
   add_task(&task_d);
+#ifndef BOARD_EV3
+  // Seems to block out all task on EV3
   add_task(&syscall_test);
+#endif
 
   add_task(&getchar_test);
 
