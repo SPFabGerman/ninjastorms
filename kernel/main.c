@@ -97,6 +97,17 @@ syscall_test(void)
     create_process(&task_b);
 }
 
+static void
+getchar_test(void)
+{
+  while (1) {
+    volatile int i;
+    for (i = 0; i < 1000000; ++i);
+    printf("Please put char: ");
+    int c = getchar();
+    printf("\nYour character was: %c\n", c);
+  }
+}
 
 char shuriken[] =
 "                 /\\\n"
@@ -118,6 +129,8 @@ kernel_main (void)
   //add_task(&task_c);
   add_task(&task_d);
   add_task(&syscall_test);
+
+  add_task(&getchar_test);
 
   start_scheduler();
 

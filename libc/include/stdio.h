@@ -40,6 +40,8 @@
 
 int putchar(int c);
 
+int getchar();
+
 int puts (const char * __restrict s);
 
 int printf (const char * __restrict format, ...) __check_format;

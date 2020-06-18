@@ -14,6 +14,7 @@ libc_libc_la_SOURCES = \
     libc/errno/errno.c \
     libc/stdio/printf.c \
     libc/stdio/putchar.c \
+    libc/stdio/getchar.c \
     libc/stdio/puts.c \
     libc/stdio/vprintf.c \
     libc/string/memcmp.c \
