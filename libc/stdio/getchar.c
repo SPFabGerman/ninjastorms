@@ -24,14 +24,8 @@
 #include <stdio.h>
 
 #if BOARD_EV3
-// UART - Recieve Buffer Register
 #define UART_RBR (volatile char *)(0x01D0C000)
-// UART - Interrupt Enable Register
-#define UART_IER (volatile char *)(0x01D0C004)
-// UART - Interrupt Identification Register
-#define UART_IIR (volatile char *)(0x01D0C008)
 #define UART_LSR (volatile char *)(0x01D0C014)
-#define UART_MSR (volatile char *)(0x01D0C018)
 #endif
 
 /**
