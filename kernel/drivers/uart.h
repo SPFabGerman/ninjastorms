@@ -19,92 +19,99 @@
 
 #include "kernel/drivers/sensor.h"
 
-// Type for one UART Register.
+
+#include <sys/types.h>
+typedef unsigned int uint32_t;
+
+// Type for one UART RegisVter.
 // Needs to be an specific byte length.
 // (4 Byte, so one int, for the EV3)
-typedef int uart_register;
+typedef volatile uint32_t uart_register;
 
 // A Struct that can be used, to acces all the registers of the uart devices.
 typedef struct {
     union {
-        uart_register base_adress;
+        volatile uart_register base_adress;
         // Recieve Buffer Register (R)
-        uart_register rbr;
+        volatile uart_register rbr;
         // Transmiter Holding Register (W)
-        uart_register thr;
+        volatile uart_register thr;
     };
 
     union {
-        uart_register base_p_1;
+        volatile uart_register base_p_1;
         // Interrupt Enable Register (R/W)
-        uart_register ier;
+        volatile uart_register ier;
     };
 
     union {
-        uart_register base_p_2;
+        volatile uart_register base_p_2;
         // Interrupt Identification Register (R)
-        uart_register iir;
+        volatile uart_register iir;
         // FIFO controll Regisert (W)
-        uart_register fcr;
+        volatile uart_register fcr;
     };
 
     union {
-        uart_register base_p_3;
+        volatile uart_register base_p_3;
         // Line Controll Register (R/W)
-        uart_register lcr;
+        volatile uart_register lcr;
     };
 
     union {
-        uart_register base_p_4;
+        volatile uart_register base_p_4;
         // Modem Controll Register (R/W)
-        uart_register mcr;
+        volatile uart_register mcr;
     };
 
     union {
-        uart_register base_p_5;
+        volatile uart_register base_p_5;
         // Line Status Register (R)
-        uart_register lsr;
+        volatile uart_register lsr;
     };
 
     union {
-        uart_register base_p_6;
+        volatile uart_register base_p_6;
         // Modem Status Register (R)
-        uart_register msr;
+        volatile uart_register msr;
     };
 
     union {
-        uart_register base_p_7;
+        volatile uart_register base_p_7;
         // Unused
-        uart_register scr;
+        volatile uart_register scr;
     };
 
     union {
-        uart_register base_p_8;
+        volatile uart_register base_p_8;
         // Irgendwas mit der Clock
-        uart_register dll;
+        volatile uart_register dll;
     };
 
     union {
-        uart_register base_p_9;
+        volatile uart_register base_p_9;
         // Irgendwas mit der Clock
-        uart_register dlh;
+        volatile uart_register dlh;
     };
 
-    uart_register base_p_10;
-    uart_register base_p_11;
-    uart_register base_p_12;
+    volatile uart_register base_p_10;
+    volatile uart_register base_p_11;
+    volatile uart_register base_p_12;
 
     union {
-        uart_register base_p_13;
+        volatile uart_register base_p_13;
         // ?
-        uart_register mdr;
+        volatile uart_register mdr;
     };
 } uart_reg_info;
 
 extern volatile uart_reg_info *uart_ports[];
 
+void uart_2_setup();
+
 // Read data from the UART Sensor port.
-uart_register uart_read(sensor_port_id port);
+uart_register
+uart_read(sensor_port_id port);
 
 // Write data to the UART Sensor port.
 void uart_write(sensor_port_id port, uart_register data);
