@@ -183,9 +183,9 @@ pin_info pininfo[] =
   {  3, 0xFF0FFFFF, 0x00200000 }, // UART0_TXD
   {  3, 0xFFF0FFFF, 0x00020000 }, // UART0_RXD
   {  4, 0x0FFFFFFF, 0x20000000 }, // UART1_TXD
-//  {  4, 0xF0FFFFFF, 0x02000000 }, // UART1_RXD
+  {  4, 0xF0FFFFFF, 0x02000000 }, // UART1_RXD
 
-  { 0, 0x000000000, 0x00000000 },
+  // { 0, 0x000000000, 0x00000000 },
 
   /* SPI0 pins */
   {  3, 0xFFFF0FFF, 0x00001000 },

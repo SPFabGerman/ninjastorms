@@ -78,19 +78,19 @@ typedef struct {
 
     union {
         volatile uart_register base_p_7;
-        // Unused
+        // Scratch Register
         volatile uart_register scr;
     };
 
     union {
         volatile uart_register base_p_8;
-        // Irgendwas mit der Clock
+        // Divisor Latch Low (R/W)
         volatile uart_register dll;
     };
 
     union {
         volatile uart_register base_p_9;
-        // Irgendwas mit der Clock
+        // Divisior Latch High (R/W)
         volatile uart_register dlh;
     };
 
@@ -108,6 +108,8 @@ typedef struct {
 extern volatile uart_reg_info *uart_ports[];
 
 void uart_2_setup();
+
+void uart_reg_printf(sensor_port_id port);
 
 // Read data from the UART Sensor port.
 uart_register

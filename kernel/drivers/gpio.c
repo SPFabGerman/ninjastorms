@@ -58,6 +58,22 @@ gpio_init_pin (unsigned int pin)
   SYSCFG_LOCK;
 }
 
+void gpio_init_pin_false(unsigned int pin)
+{
+  SYSCFG_UNLOCK;
+
+  // setup pin multiplexing
+  pin_info pi = pininfo[pin];
+
+  if (__builtin_expect(pin >= pininfo_size || pi.muxreg_mask == 0, 0))
+    printf("gpio: can not initialize pin %x - need init information in pin_info\n", pin);
+
+  SYSCFG_PINMUX(pi.muxreg) &= pi.muxreg_mask;
+  SYSCFG_PINMUX(pi.muxreg) |= pi.muxreg_mode;
+
+  SYSCFG_LOCK;
+}
+
 void
 gpio_init_outpin (unsigned int pin)
 {
@@ -70,6 +86,26 @@ gpio_init_outpin (unsigned int pin)
   GPIO_DIR(pin) &= ~GPIO_MASK(pin);
 
   SYSCFG_LOCK;
+}
+
+void
+gpio_set_low(unsigned int pin)
+{
+  GPIO_CLR(pin)  =  GPIO_MASK(pin);
+  GPIO_DIR(pin) &= ~GPIO_MASK(pin);
+}
+
+void
+gpio_set_high(unsigned int pin)
+{
+  GPIO_SET(pin)  =  GPIO_MASK(pin);
+  GPIO_DIR(pin) &= ~GPIO_MASK(pin); 
+}
+
+void
+gpio_set_float (unsigned int pin)
+{
+  GPIO_DIR(pin) |= GPIO_MASK(pin);
 }
 
 void

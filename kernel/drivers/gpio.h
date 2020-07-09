@@ -38,8 +38,14 @@
 #define GPIO_CLR(N)       *((volatile unsigned int*)(GPIO_BANK(N) + 0x0C))
 
 void gpio_init_pin (unsigned int pin);
+void gpio_init_pin_false (unsigned int pin);
 
 void gpio_init_outpin (unsigned int pin);
+
+void gpio_set_low(unsigned int pin);
+void gpio_set_high(unsigned int pin);
+
+void gpio_set_float(unsigned int pin);
 
 void gpio_init_inpin (unsigned int pin);
 
