@@ -56,13 +56,18 @@ volatile uart_reg_info * uart_ports[4] = {
 void uart_2_setup()
 {
     // Enable Pin Lines
-    gpio_init_pin(UART0_ENABLE);
+    // gpio_init_pin(UART0_ENABLE);
     // Initialize TXD and RXD Lines
-    gpio_init_pin(UART0_TXD);
-    gpio_init_pin(UART0_RXD);
+    // gpio_init_pin(UART0_TXD);
+    // gpio_init_pin(UART0_RXD);
     // Initialize Digital Input / Output Lines (TODO: needed here?)
-    gpio_init_pin(DIGIB0);
-    gpio_init_pin(DIGIB1); 
+    // gpio_init_pin(DIGIB0);
+    // gpio_init_pin(DIGIB1);
+
+    gpio_init_outpin(UART0_TXD);
+    gpio_init_inpin(UART0_RXD);
+    gpio_init_outpin(UART0_ENABLE);
+    gpio_set_low(UART0_ENABLE);
 
     // gpio_init_pin(UART0_TXD_v2);
     // gpio_init_pin(UART0_RXD_v2);
@@ -93,23 +98,25 @@ void uart_2_setup()
     uart_ports[SENSOR_PORT_2]->ier = 0x00;
 
     // Clear Pin Data and reset FIFO
-    gpio_init_pin(UART0_TXD);
-    gpio_set_low(UART0_ENABLE);
+    // gpio_init_pin(UART0_TXD);
+    // gpio_set_low(UART0_ENABLE);
     // gpio_init_outpin(UART0_ENABLE);
     // gpio_init_outpin(UART0_TXD);
     // gpio_init_outpin(UART0_TXD_v2);
     uart_ports[SENSOR_PORT_2]->fcr = 0x07;
 
+    uart_ports[SENSOR_PORT_2]->base_p_12 = (0x3 << 13);
+
     // Disble Line
-    gpio_set_high(UART0_ENABLE);
+    // gpio_set_high(UART0_ENABLE);
     // Set Pin 5 and 6 to Float
-    gpio_set_float(DIGIB0);
-    gpio_set_float(DIGIB1);
+    // gpio_set_float(DIGIB0);
+    // gpio_set_float(DIGIB1);
 
     // Clear Pin Data and reset FIFO
-    gpio_init_pin(UART0_TXD);
-    gpio_set_low(UART0_ENABLE);
-    uart_ports[SENSOR_PORT_2]->fcr = 0x07;
+    // gpio_init_pin(UART0_TXD);
+    // gpio_set_low(UART0_ENABLE);
+    // uart_ports[SENSOR_PORT_2]->fcr = 0x07;
 
     printf("Setup done.\n");
 }
