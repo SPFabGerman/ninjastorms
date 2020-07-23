@@ -65,3 +65,5 @@ sensor_touch_state sensor_touch_get_state (sensor_port_id port);
  *   an unsigned int representing the light level (small number -> bright)
  */
 unsigned short sensor_light_get (sensor_port_id port);
+
+int ev3_sensor_color_get(sensor_port_id port);

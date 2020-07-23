@@ -53,4 +53,4 @@ void gpio_set (unsigned int pin, unsigned int value);
 
 unsigned int gpio_get (unsigned int pin);
 
-void spi_init_pin (unsigned int pin);
+unsigned int gpio_read (unsigned int pin);

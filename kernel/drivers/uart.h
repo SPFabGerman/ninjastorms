@@ -19,19 +19,23 @@
 
 #include "kernel/drivers/sensor.h"
 
-
 #include <sys/types.h>
+// TODO: Remove
 typedef unsigned int uint32_t;
 
-// Type for one UART RegisVter.
-// Needs to be an specific byte length.
+#define UART_FIFO_ENABLE 0b001
+#define UART_FIFO_DISABLE 0b000
+#define UART_FIFO_RECIEVE_CLEAR 0b010
+#define UART_FIFO_TRANSMIT_CLEAR 0b100
+
+// Length specification for one UART Register.
 // (4 Byte, so one int, for the EV3)
 typedef volatile uint32_t uart_register;
 
 // A Struct that can be used, to acces all the registers of the uart devices.
 typedef struct {
     union {
-        volatile uart_register base_adress;
+        volatile uart_register base;
         // Recieve Buffer Register (R)
         volatile uart_register rbr;
         // Transmiter Holding Register (W)
@@ -78,7 +82,7 @@ typedef struct {
 
     union {
         volatile uart_register base_p_7;
-        // Scratch Register
+        // Scratch Pad Register
         volatile uart_register scr;
     };
 
@@ -94,26 +98,43 @@ typedef struct {
         volatile uart_register dlh;
     };
 
-    volatile uart_register base_p_10;
-    volatile uart_register base_p_11;
-    volatile uart_register base_p_12;
+    union {
+        volatile uart_register base_p_10;
+        // Revision Identification Register 1
+        volatile uart_register revid1;
+    };
+    
+    union {
+        volatile uart_register base_p_11;
+        // Revision Identification Register 1
+        volatile uart_register revid2;
+    };
+
+    union {
+        volatile uart_register base_p_12;
+        // Power and emulation management register
+        volatile uart_register pwremu_mgmt;
+    };
 
     union {
         volatile uart_register base_p_13;
-        // ?
+        // Mode Definition Register
         volatile uart_register mdr;
     };
 } uart_reg_info;
 
 extern volatile uart_reg_info *uart_ports[];
 
+void uart_set_bitrate(sensor_port_id port, unsigned int bitrate);
+
 void uart_2_setup();
 
 void uart_reg_printf(sensor_port_id port);
 
 // Read data from the UART Sensor port.
-uart_register
-uart_read(sensor_port_id port);
+uart_register uart_read(sensor_port_id port);
 
 // Write data to the UART Sensor port.
 void uart_write(sensor_port_id port, uart_register data);
+
+unsigned int uart_read_pin6(sensor_port_id port);

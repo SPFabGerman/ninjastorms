@@ -40,25 +40,10 @@
 #define GPIO_DIR(N)       *((volatile unsigned int*)(GPIO_BANK(N) + 0x00))
 #define GPIO_SET(N)       *((volatile unsigned int*)(GPIO_BANK(N) + 0x08))
 #define GPIO_CLR(N)       *((volatile unsigned int*)(GPIO_BANK(N) + 0x0C))
+#define GPIO_IN(N)        *((volatile unsigned int*)(GPIO_BANK(N) + 0x10))
 
 void
 gpio_init_pin (unsigned int pin)
-{
-  SYSCFG_UNLOCK;
-
-  // setup pin multiplexing
-  pin_info pi = pininfo[pin];
-
-  if (__builtin_expect(pin >= pininfo_size || pi.muxreg_mask == 0, 0))
-    printf("gpio: can not initialize pin %x - need init information in pin_info\n", pin);
-
-  SYSCFG_PINMUX(pi.muxreg) &= pi.muxreg_mask;
-  SYSCFG_PINMUX(pi.muxreg) |= pi.muxreg_mode;
-
-  SYSCFG_LOCK;
-}
-
-void gpio_init_pin_false(unsigned int pin)
 {
   SYSCFG_UNLOCK;
 
@@ -134,4 +119,9 @@ gpio_get (unsigned int pin)
   gpio_init_inpin(pin);
   volatile unsigned int *Reg = (GPIO_BANK(pin) + 0x10);
   return (((*Reg) & GPIO_MASK(pin)) != 0);
+}
+
+unsigned int gpio_read (unsigned int pin)
+{
+  return GPIO_IN(pin) & GPIO_MASK(pin);
 }
