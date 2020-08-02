@@ -24,14 +24,7 @@
 #  include <config.h>
 #endif
 
-enum sensor_port_id
-{
-  SENSOR_PORT_1 = 0x00,
-  SENSOR_PORT_2 = 0x01,
-  SENSOR_PORT_3 = 0x02,
-  SENSOR_PORT_4 = 0x03
-};
-typedef enum sensor_port_id sensor_port_id;
+#include "ports.h"
 
 enum sensor_touch_state
 {
@@ -65,5 +58,3 @@ sensor_touch_state sensor_touch_get_state (sensor_port_id port);
  *   an unsigned int representing the light level (small number -> bright)
  */
 unsigned short sensor_light_get (sensor_port_id port);
-
-int ev3_sensor_color_get(sensor_port_id port);

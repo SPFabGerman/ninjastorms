@@ -17,31 +17,13 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
  ******************************************************************************/
 
-#include "ports.h"
+#pragma once
 
-#define UART_FIFO_RECIEVE_CLEAR 0b010
-#define UART_FIFO_TRANSMIT_CLEAR 0b100
-
-void uart_set_bitrate(sensor_port_id port, unsigned int bitrate);
-void uart_flush_fifo(sensor_port_id port, unsigned char buf);
-
-// TODO: Funktion aufspalten
-void uart_2_setup();
-
-// Wait until all data has been send
-void uart_wait_send_done(sensor_port_id port);
-// Wait until new data can be inserted into the send buffer
-void uart_wait_send_free(sensor_port_id port);
-// Wait until new data can be read from the recieve buffer
-void uart_wait_recv_free(sensor_port_id port);
-
-// Read data from the UART Sensor port.
-unsigned char uart_read(sensor_port_id port);
-// Write data to the UART Sensor port.
-void uart_write(sensor_port_id port, unsigned char data);
-// Write data to the UART Sensor and wait until it is send.
-void uart_write_block(sensor_port_id port, unsigned char data);
-
-unsigned int uart_read_pin6(sensor_port_id port);
-
-void uart_reg_print(sensor_port_id port);
+enum sensor_port_id
+{
+    SENSOR_PORT_1 = 0x00,
+    SENSOR_PORT_2 = 0x01,
+    SENSOR_PORT_3 = 0x02,
+    SENSOR_PORT_4 = 0x03
+};
+typedef enum sensor_port_id sensor_port_id;

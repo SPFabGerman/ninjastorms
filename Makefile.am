@@ -47,6 +47,8 @@ ninjastorms_SOURCES = \
     kernel/drivers/pininfo.c kernel/drivers/pininfo.h \
     kernel/drivers/sensor.c kernel/drivers/sensor.h \
     kernel/drivers/uart.c kernel/drivers/uart.h \
+    kernel/drivers/uart_sensor.c kernel/drivers/uart_sensor.h \
+    kernel/drivers/uart_reg.h kernel/drivers/ports.h \
     kernel/drivers/spi.c kernel/drivers/spi.h \
     kernel/drivers/timer.c kernel/drivers/timer.h
 

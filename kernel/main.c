@@ -20,7 +20,7 @@
 
 #include "main.h"
 
-#include "kernel/drivers/button.h"
+#include "kernel/demo/demo_ev3_color.c"
 #include "kernel/scheduler.h"
 #include "memory.h"
 #include "kernel/utilities.h"
@@ -125,18 +125,20 @@ kernel_main (void)
   puts("  shuriken ready");
   puts(shuriken);
 
+  demo_ev3_color();
+
   // add_task(&task_a);
   // add_task(&task_b);
   // add_task(&task_c);
-  add_task(&task_d);
+  // add_task(&task_d);
 #ifndef BOARD_EV3
   // Seems to block out all task on EV3
   add_task(&syscall_test);
 #endif
 
-  add_task(&getchar_test);
+  // add_task(&getchar_test);
 
-  start_scheduler();
+  // start_scheduler();
 
   puts("All done. ninjastorms out!");
 
