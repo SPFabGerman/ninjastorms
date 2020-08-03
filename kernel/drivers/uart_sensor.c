@@ -142,6 +142,33 @@ unsigned char uartsensor_read_data(sensor_port_id port) {
 
 
 
+int uartsensor_setup_color(sensor_port_id port) {
+    // Setup UART Port
+    uartsensor_setup(port);
+
+    // Wait for Start of Initialization Protocoll
+    // TODO: Wait instead for break condition (Pin6 is Low for, x Sec.)
+    uartsensor_wait_init(port, EV3_COLOR_ID);
+    // Read the rest of the init sequence
+    uartsensor_dump_bytes(port, EV3_COLOR_DUMP);
+    // Check if we reached actually the end
+    if (!uartsensor_respond_ack(port)) {
+        return 0; // Some Failure occured
+    }
+
+    // TODO: No SYNC Byte Handling here? Why?
+
+    // Change Bitrate
+    uartsensor_set_middle_bitrate(port);
+
+    // Dump first full data pack, to enable instant change of Mode
+    uartsensor_wait_data(port, UARTSENSOR_MODE_DEFAULT);
+
+    return 1;
+}
+
+
+
 void uartsensor_hexdump(sensor_port_id port) {
     while (1) {
         uartsensor_send_nack(port);

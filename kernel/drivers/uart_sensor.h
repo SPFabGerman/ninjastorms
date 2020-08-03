@@ -86,4 +86,10 @@ void uartsensor_change_mode(sensor_port_id port, unsigned char mode);
 unsigned char uartsensor_read_data(sensor_port_id port);
 
 
+// Helper Setup Function for the EV3 Color Sensor.
+// Needs to be called before data is first read and probably every time after
+// a long time out, since the sensor probably reset itself
+int uartsensor_setup_color(sensor_port_id port);
+
+
 void uartsensor_hexdump(sensor_port_id port);
